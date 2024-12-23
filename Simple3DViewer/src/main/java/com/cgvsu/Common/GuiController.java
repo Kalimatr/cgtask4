@@ -11,16 +11,20 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 
 public class GuiController {
 
@@ -40,6 +44,7 @@ public class GuiController {
             1.0F, 1, 0.01F, 100);
 
     private Timeline timeline;
+    private double startX, startY;
 
     @FXML
     private void initialize() {
@@ -63,7 +68,12 @@ public class GuiController {
 
         timeline.getKeyFrames().add(frame);
         timeline.play();
+        anchorPane.setOnMouseClicked(this::handleMouseClick);
+        anchorPane.setOnMouseDragged(this::handleMouseMove);
+        anchorPane.setOnScroll(this::handleScroll);
+
     }
+
 
     @FXML
     private void onOpenModelMenuItemClick() {
@@ -117,5 +127,52 @@ public class GuiController {
         camera.movePosition(new Vector3f(0, -TRANSLATION, 0));
     }
 
+    public void handleScroll(ScrollEvent scrollEvent) {
+        double deltaY = scrollEvent.getDeltaY();
 
+        if (deltaY > 0) {
+            camera.Scale(0.90F, 0.90f, 0.90f);
+
+        } else if (deltaY < 0) {
+            camera.Scale(1.1F, 1.1f, 1.1f);
+        }
+    }
+
+
+    public void handleMouseClick(MouseEvent mouseEvent) {
+        startX = mouseEvent.getX();
+        startY = mouseEvent.getY();
+    }
+
+
+    public void handleMouseMove(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+            if (mouseEvent.getX() > startX) {
+                camera.Rotate(0, -0.01F, 0);
+            }
+            if (mouseEvent.getX() < startX) {
+                camera.Rotate(0, 0.01F, 0);
+            }
+
+            if (mouseEvent.getY() > startY) {
+                camera.Rotate(0.01F, 0, 0);
+            }
+            if (mouseEvent.getY() < startY) {
+                camera.Rotate(-0.01F, 0, 0);
+            }
+        }
+
+        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+            if (mouseEvent.getX() > startX) {
+                camera.Rotate(0, 0, 0.01F);
+            }
+            if (mouseEvent.getX() < startX) {
+                camera.Rotate(0, 0, -0.01F);
+            }
+        }
+
+        startX = mouseEvent.getX();
+        startY = mouseEvent.getY();
+
+    }
 }

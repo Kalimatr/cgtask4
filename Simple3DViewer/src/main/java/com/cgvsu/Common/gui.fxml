@@ -45,12 +45,14 @@
                     <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
                 </accelerator>
             </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#handleCameraTranslate" text="Down">
+                <accelerator>
+                    <KeyCodeCombination alt="UP" code="U" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                </accelerator>
+            </MenuItem>
         </Menu>
     </MenuBar>
 
     <Canvas fx:id="canvas" height="870" layoutX="2.0" layoutY="25.0" width="1600" AnchorPane.topAnchor="25.0" />
-   <TextField layoutX="1238.0" layoutY="73.0" prefHeight="25.0" prefWidth="71.0" />
-   <TextField layoutX="1330.0" layoutY="73.0" prefHeight="25.0" prefWidth="65.0" />
-   <TextField layoutX="1409.0" layoutY="73.0" prefHeight="25.0" prefWidth="57.0" />
-   <Button layoutX="1337.0" layoutY="127.0" mnemonicParsing="false" text="Scale" />
+
 </AnchorPane>

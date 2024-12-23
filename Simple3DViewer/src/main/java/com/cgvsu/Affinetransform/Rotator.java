@@ -32,23 +32,24 @@ public class Rotator implements AffineTransformation {
             case X -> {
                 return new Matrix4f(new float[][]{
                         {1, 0, 0, 0},
-                        {0, cosA, -sinA, 0},
-                        {0, sinA, cosA, 0},
+                        {0, cosA, sinA, 0},
+                        {0, -sinA, cosA, 0},
                         {0, 0, 0, 1}
                 });
             }
             case Y -> {
                 return new Matrix4f(new float[][]{
-                        {cosA, 0, sinA, 0},
+                        {cosA, 0, -sinA, 0},
                         {0, 1, 0, 0},
-                        {-sinA, 0, cosA, 0},
+                        {sinA, 0, cosA, 0},
                         {0, 0, 0, 1}
                 });
+//
             }
             case Z -> {
                 return new Matrix4f(new float[][]{
-                        {cosA, -sinA, 0, 0},
-                        {sinA, cosA, 0, 0},
+                        {cosA, sinA, 0, 0},
+                        {-sinA, cosA, 0, 0},
                         {0, 0, 1, 0},
                         {0, 0, 0, 1}
                 });

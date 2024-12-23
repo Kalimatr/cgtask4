@@ -39,7 +39,7 @@ public class GuiController {
     private Model mesh = null;
 
     private Camera camera = new Camera(
-            new Vector3f(0, 00, 100),
+            new Vector3f(0, 0, 100),
             new Vector3f(0, 0, 0),
             1.0F, 1, 0.01F, 100);
 
@@ -124,7 +124,8 @@ public class GuiController {
 
     @FXML
     public void handleCameraDown(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(0, -TRANSLATION, 0));
+        //camera.movePosition(new Vector3f(0, -TRANSLATION, 0));
+        camera.Rotate(0, 180, 0);
     }
 
     public void handleScroll(ScrollEvent scrollEvent) {
@@ -143,22 +144,30 @@ public class GuiController {
         startX = mouseEvent.getX();
         startY = mouseEvent.getY();
     }
-
-
+    float angle = 0;
     public void handleMouseMove(MouseEvent mouseEvent) {
+        float motionValueX = 0.01F;
+        float motionValueY = Math.abs(angle) > 90 && Math.abs(angle) < 270 ? -0.01F : 0.01F;
+        System.out.println(angle);
+        if (Math.abs(angle) > 360) {
+            angle = 0;
+        }
+        System.out.println(angle);
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             if (mouseEvent.getX() > startX) {
-                camera.Rotate(0, -0.01F, 0);
+                camera.Rotate(0, -motionValueX, 0);
+                angle += Math.abs(Math.toDegrees(motionValueX));
             }
             if (mouseEvent.getX() < startX) {
-                camera.Rotate(0, 0.01F, 0);
+                camera.Rotate(0, motionValueX, 0);
+                angle -= Math.abs(Math.toDegrees(motionValueX));
             }
 
             if (mouseEvent.getY() > startY) {
-                camera.Rotate(0.01F, 0, 0);
+                camera.Rotate(motionValueY, 0, 0);
             }
             if (mouseEvent.getY() < startY) {
-                camera.Rotate(-0.01F, 0, 0);
+                camera.Rotate(-motionValueY, 0, 0);
             }
         }
 
@@ -170,9 +179,7 @@ public class GuiController {
                 camera.Rotate(0, 0, -0.01F);
             }
         }
-
         startX = mouseEvent.getX();
         startY = mouseEvent.getY();
-
     }
 }

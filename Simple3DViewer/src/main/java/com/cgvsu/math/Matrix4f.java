@@ -1,5 +1,7 @@
 package com.cgvsu.math;
 
+import java.util.Arrays;
+
 import static com.cgvsu.math.Global.EPS;
 
 public class Matrix4f {
@@ -91,7 +93,7 @@ public class Matrix4f {
         }
     }
 
-    public float determinant() {
+    public float determinant(float[][] mat) {
         float det = 0;
         for (int i = 0; i < SIZE; i++) {
             float[][] minor = getMinor(0, i);
@@ -99,6 +101,33 @@ public class Matrix4f {
             det += (float) (Math.pow(-1, i) * mat[0][i] * minorMatrix.determinant());
         }
         return det;
+    }
+
+    public Matrix4f invert(float[][] matrix) {
+        if (matrix.length != 4 || matrix[0].length != 4) {
+            throw new IllegalArgumentException("Матрица должна быть размером 4x4.");
+        }
+
+        // Копируем исходную матрицу, чтобы не изменять ее
+        float[][] result = Arrays.stream(matrix).map(float[]::clone).toArray(float[][]::new);
+
+        // Определитель матрицы
+        double det = determinant(matrix);
+
+        if (det == 0) {
+            throw new ArithmeticException("Определитель матрицы равен нулю, невозможно найти обратную матрицу.");
+        }
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                int subi = i > 0 ? i : 1;
+                int subj = j > 0 ? j : 1;
+                double minorDet = determinant( getMinor(subi,subi));
+                result[j][i] = (float) (((i + j) % 2 == 0 ? 1 : -1) * minorDet / det);
+            }
+        }
+
+        return new Matrix4f(result);
     }
 
     private float[][] getMinor(int row, int col) {

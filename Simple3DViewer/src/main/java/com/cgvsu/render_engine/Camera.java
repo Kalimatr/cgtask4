@@ -54,6 +54,14 @@ public class Camera {
         this.position = affineTransformation.transform(this.position);
     }
 
+    public void Rotate(int x, int y, int z) {
+        AffineTransformation affineTransformation = new Transformation(
+                new Rotator(x, Rotator.Axis.X),
+                new Rotator(y, Rotator.Axis.Y),
+                new Rotator(z, Rotator.Axis.Z));
+        this.position = affineTransformation.transform(this.position);
+    }
+
     public void Scale(float x, float y, float z) {
         AffineTransformation affineTransformation = new Transformation(new Scaling(x, y, z));
         this.position = affineTransformation.transform(this.position);

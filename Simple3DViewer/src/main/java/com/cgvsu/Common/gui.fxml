@@ -45,11 +45,7 @@
                     <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
                 </accelerator>
             </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#handleCameraTranslate" text="Down">
-                <accelerator>
-                    <KeyCodeCombination alt="UP" code="U" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                </accelerator>
-            </MenuItem>
+
         </Menu>
     </MenuBar>
 
